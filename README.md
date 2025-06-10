@@ -28,6 +28,9 @@ git clone https://github.com/gittycat/chrome-extension.git
 cd chrome-extension
 ```
 
+## TODO
+- Add keyboard shortcut to add ALL tabs in current window to the reading list. Eg: Shift-Cmd-L
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
