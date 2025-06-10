@@ -23,10 +23,14 @@ chrome.commands.onCommand.addListener(async (command) => {
         });
       }
     } catch (error) {
-      console.error('Error adding to reading list:', error);
+      const isDuplicate = error && error.message && error.message.includes('Duplicate');
+      
+      // Only log error if it's not a duplicate URL
+      if (!isDuplicate) {
+        console.error('Error adding to reading list:', error);
+      }
       
       // Show info notification for duplicate URL, error for others
-      const isDuplicate = error && error.message && error.message.includes('Duplicate');
       chrome.notifications.create({
         type: 'basic',
         iconUrl: 'icon.png',

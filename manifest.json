@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Add to Reading List",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Add current page to Reading List with Ctrl+Shift+L",
   "icons": {
     "128": "icon.png"
