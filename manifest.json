@@ -1,14 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Add to Reading List",
-  "version": "1.0",
+  "version": "1.2",
   "description": "Add current page to Reading List with Ctrl+Shift+L",
   "icons": {
     "128": "icon.png"
   },
   "permissions": [
     "readingList",
-    "activeTab"
+    "activeTab",
+    "notifications"
   ],
   "commands": {
     "add-to-reading-list": {
@@ -21,12 +22,5 @@
   },
   "background": {
     "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
-    }
-  ]
+  }
 }

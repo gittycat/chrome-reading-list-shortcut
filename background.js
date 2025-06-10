@@ -1,4 +1,4 @@
-// Background script - handles keyboard command
+// Background script - handles keyboard command and notifications
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === 'add-to-reading-list') {
     try {
@@ -13,26 +13,27 @@ chrome.commands.onCommand.addListener(async (command) => {
           hasBeenRead: false
         });
         
-        // Send message to content script to show feedback
-        chrome.tabs.sendMessage(tab.id, {
-          action: 'showFeedback',
-          title: tab.title || 'Page'
+        // Show success notification
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'icon.png',
+          title: 'Added to Reading List',
+          message: `"${tab.title || 'Page'}" has been added to your reading list.`,
+          priority: 0
         });
       }
     } catch (error) {
       console.error('Error adding to reading list:', error);
       
-      // Try to show error feedback if possible
-      try {
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        chrome.tabs.sendMessage(tab.id, {
-          action: 'showFeedback',
-          title: 'Error',
-          isError: true
-        });
-      } catch (msgError) {
-        console.error('Could not send error message:', msgError);
-      }
+      // Show info notification for duplicate URL, error for others
+      const isDuplicate = error && error.message && error.message.includes('Duplicate');
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: 'icon.png',
+        title: isDuplicate ? 'Info' : 'Error',
+        message: isDuplicate ? 'Page already in Reading List.' : 'Failed to add to reading list.',
+        priority: 0
+      });
     }
   }
 });
